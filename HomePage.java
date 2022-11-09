@@ -22,7 +22,8 @@ public class HomePage extends JFrame{
 		panel = new JPanel();;
 		Font font = new Font("Arial", Font.BOLD, 50);
 		if(goal>dailyCalories) {
-			JTextArea a = new JTextArea("Goal = "+goal+
+			JTextArea a = new JTextArea("Welcome User!"+
+					"Goal = "+goal+
 					"\nCalories Today = "+dailyCalories+
 					"\nCalories Left  = "+(goal-dailyCalories)+
 					"\nCarbs Today ="+dailyCarbs+
@@ -33,7 +34,8 @@ public class HomePage extends JFrame{
 			a.setAlignmentY(CENTER_ALIGNMENT);
 			panel.add(a);
 		}else {
-			JTextArea a = new JTextArea("Goal = "+goal+
+			JTextArea a = new JTextArea("Welcome User!"+
+					"\nGoal = "+goal+
 					"\nCalories Today = "+dailyCalories+
 					"\nGoal Complete!"+
 					"\nCarbs Today ="+dailyCarbs+
@@ -65,7 +67,8 @@ public class HomePage extends JFrame{
 		panel = new JPanel();;
 		Font font = new Font("Arial", Font.BOLD, 50);
 		if(goal>dailyCalories) {
-			JTextArea a = new JTextArea("Goal = "+goal+
+			JTextArea a = new JTextArea("Welcome User!"+
+					"\nGoal = "+goal+
 					"\nCalories Today = "+dailyCalories+
 					"\nCalories Left  = "+(goal-dailyCalories)+
 					"\nCarbs Today ="+dailyCarbs+
@@ -77,7 +80,8 @@ public class HomePage extends JFrame{
 			a.setEditable(false);
 			panel.add(a);
 		}else {
-			JTextArea a = new JTextArea("Goal = "+goal+
+			JTextArea a = new JTextArea("Welcome User!"+
+					"\nGoal = "+goal+
 					"\nCalories Today = "+dailyCalories+
 					"\nGoal Complete!"+
 					"\nCarbs Today ="+dailyCarbs+
