@@ -2,6 +2,11 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -26,12 +31,21 @@ public class LoggingPage extends JFrame
 		setTitle("Logging Page");
 		// Panel setup
 		listPanel = new JPanel();;
-		JTextArea a = new JTextArea("");
+		JTextArea a = new JTextArea("", 20, 20);
 		a.setEditable(false);
-		a.add(new JScrollPane());
-		listPanel.add(a);
+		JScrollPane scroll = new JScrollPane(a);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		listPanel.add(scroll);
 		
-		entryPanel = new JPanel(new GridLayout(6, 2));
+		entryPanel = new JPanel(new GridLayout(8, 2));
+		JTextArea area6 = new JTextArea("Day: ");
+		area6.setEditable(false);
+		area6.setAlignmentX(CENTER_ALIGNMENT);
+		area6.setAlignmentY(CENTER_ALIGNMENT);
+		JTextArea area7 = new JTextArea("Meal # ");
+		area7.setEditable(false);
+		area7.setAlignmentX(CENTER_ALIGNMENT);
+		area7.setAlignmentY(CENTER_ALIGNMENT);
 		JTextArea area1 = new JTextArea("Food Item: ");
 		area1.setEditable(false);
 		area1.setAlignmentX(CENTER_ALIGNMENT);
@@ -52,6 +66,12 @@ public class LoggingPage extends JFrame
 		area5.setEditable(false);
 		area5.setAlignmentX(CENTER_ALIGNMENT);
 		area5.setAlignmentY(CENTER_ALIGNMENT);
+		entryPanel.add(area6);
+		JTextField field6 = new JTextField();
+		entryPanel.add(field6);
+		entryPanel.add(area7);
+		JTextField field7 = new JTextField();
+		entryPanel.add(field7);
 		entryPanel.add(area1);
 		JTextField field1 = new JTextField();
 		entryPanel.add(field1);
@@ -71,25 +91,65 @@ public class LoggingPage extends JFrame
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				a.setText(a.getText() + "\n" + field1.getText() + "\n" + field2.getText() + "\n" + field3.getText() + "\n" + field4.getText() + "\n" + field5.getText() + "\n" );	
+				String str = (a.getText() + "\nDay: " + field6.getText() + " Meal #" + field7.getText() + "\n" + field1.getText() + "\nCalories: " + field2.getText() + "\nCarbs: " + field3.getText() + " grams\nFat: " + field4.getText() + " grams\nProtein: " + field5.getText() + " grams\n");
+				a.setText(str);
+				try
+				{
+					File file = new File("calendar.txt");
+					file.createNewFile();
+					FileWriter fw = new FileWriter(file, true);
+					PrintWriter pw = new PrintWriter(fw);
+						
+					pw.println(str);
+						
+					pw.close();
+					fw.close();
+				}
+				catch (FileNotFoundException f)
+				{
+					f.printStackTrace();
+				}
+				catch (IOException f)
+				{
+					f.printStackTrace();
+				}
 			}
 		});
-		JButton resetButton = new JButton("Reset");
+		JButton resetButton = new JButton("Clear History");
 		resetButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
 				a.setText("");
+				try
+				{
+					File file = new File("calendar.txt");
+					file.createNewFile();
+					FileWriter fw = new FileWriter(file, false);
+					PrintWriter pw = new PrintWriter(fw);
+					
+					pw.println("");
+					
+					pw.close();
+					fw.close();
+				}
+				catch (FileNotFoundException f)
+				{
+					f.printStackTrace();
+				}
+				catch (IOException f)
+				{
+					f.printStackTrace();
+				}
 			}
 		});
 		entryPanel.add(addButton);
 		entryPanel.add(resetButton);
-		
+		//Put panels in frame and arrange them
 		listPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		entryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		mainPanel = new JPanel(new GridLayout(1,2));
 		mainPanel.add(listPanel);
 		mainPanel.add(entryPanel);
-		// Put panels in frame and arrange them
 		add(mainPanel);
 	}
 }
